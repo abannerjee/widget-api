@@ -3,12 +3,12 @@
 API Server for a Widget Factory application.
 
 ## Setup
-The API Server is designed to work with the following:
+The API Server dependencies:
 - python3.5
 - postgresql (v9.5)
 
 ### PostgreSQL
-For local testing, the DB server must first be initialized using the following commands:
+For local testing, run the following commands to initialize and seed the DB:
 
 ```sh
 initdb /path/to/db/directory
@@ -22,7 +22,12 @@ psql -U widgetapi -d widgetdb -f db/seed.sql
 ```
 
 ### API Server
-Start the server using the following command:
+Switch to a python3.5 environment if needed and install python dependencies:
+```sh
+pip install -r requirements.txt
+```
+
+Start the server:
 
 ```sh
 python server.py
