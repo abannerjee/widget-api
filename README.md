@@ -3,19 +3,12 @@
 API Server for a Widget Factory application.
 
 ## Setup
-Tested using:
+The API Server is designed to work with the following:
 - python3.5
 - postgresql (v9.5)
 
-Start the server using the following command:
-
-```sh
-python server.py
-```
-
-PostgreSQL is used as the primary DB. To test locally, the postgres server
-must be running.
-After installing PostgreSQL (v9.5), execute the following commands:
+### PostgreSQL
+For local testing, the DB server must first be initialized using the following commands:
 
 ```sh
 initdb /path/to/db/directory
@@ -27,6 +20,14 @@ createdb -O widgetapi widgetdb
 psql -U widgetapi -d widgetdb -f db/init.sql
 psql -U widgetapi -d widgetdb -f db/seed.sql
 ```
+
+### API Server
+Start the server using the following command:
+
+```sh
+python server.py
+```
+
 
 ## Endpoints
 
