@@ -8,6 +8,14 @@ from tornado.ioloop import IOLoop
 import tornado.web
 import psycopg2
 import logging
+import sys
+import json
+
+log = {
+    'format': '%(asctime)s %(levelname)s: %(message)s',
+    'filename': 'server.log',
+    'level': logging.DEBUG
+}
 
 options = {
     'app_port': 3000,
@@ -31,6 +39,7 @@ class Application(tornado.web.Application):
             self.db = conn
         except:
             logging.error('Error: Unable to connect to the database')
+            sys.exit(1)
 
         urls = [
             (r"/user/([0-9]+)|/user", UserHandler),
@@ -68,12 +77,16 @@ class WidgetHandler(BaseHandler):
         self.write("PUT on widget")
 
 class WidgetsHandler(BaseHandler):
-    def get(self, delim, prop, val)
+    def get(self, delim, prop, val):
         self.write("GET on widgets")
 
+# A Cateogry is defined as Property with a 'category' == 'type'.
+# Returns all categories.
 class CategoriesHandler(BaseHandler):
     def get(self):
-        self.write("GET on categories")
+        cur = self.db.cursor()
+        cur.execute("SELECT * FROM widget.property WHERE category = 'type'")
+        self.write(formatdata(cur))
 
 class SubCategoriesHandler(BaseHandler):
     def get(self):
@@ -100,7 +113,20 @@ class OrderHandler(BaseHandler):
         self.write("DELETE on order")
 
 
+# Transforms the rows returned after performing
+# a DB query into a JSON object.
+def formatdata(cur):
+    labels = [x[0] for x in cur.description]
+    rows = cur.fetchall()
+    data = [dict(zip(labels, x)) for x in rows]
+    return json.dumps(data, indent=4, separators=(',', ': '))
+
+def setupLogging():
+    logging.basicConfig(format=log['format'], filename=log['filename'], level=log['level'])
+    logging.info('Server started on {}:{}'.format(options['host'], options['app_port']))
+
 def main():
+    setupLogging()
     app = Application()
     app.listen(options['app_port'])
     IOLoop.current().start()
