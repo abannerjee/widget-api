@@ -33,7 +33,13 @@ class Application(tornado.web.Application):
             logging.error('Error: Unable to connect to the database')
 
         urls = [
+            (r"/user/([0-9]+)|/user", UserHandler),
             (r"/widget/([0-9]+)", WidgetHandler),
+            (r"/widgets/?|(\?|\&)([^=]+)\=([^&]+)", WidgetsHandler),
+            (r"/categories", CategoriesHandler),
+            (r"/sub_categories/?|(\?|\&)([^=]+)\=([^&]+)", SubCategoriesHandler),
+            (r"/widget_categories", WidgetCategoriesHandler),
+            (r"/order/([0-9]+)|/order", OrderHandler)
         ]
 
         super(Application, self).__init__(urls)
@@ -44,9 +50,54 @@ class BaseHandler(tornado.web.RequestHandler):
     def db(self):
         return self.application.db
 
+class UserHandler(BaseHandler):
+    def get(self, id):
+        self.write("GET on user: {}".format(id))
+
+    def post(self):
+        self.write("POST on user")
+
 class WidgetHandler(BaseHandler):
     def get(self, id):
         self.write("GET on widget: {}".format(id))
+
+    def post(self):
+        self.write("POST on widget")
+
+    def put(self):
+        self.write("PUT on widget")
+
+class WidgetsHandler(BaseHandler):
+    def get(self, delim, prop, val)
+        self.write("GET on widgets")
+
+class CategoriesHandler(BaseHandler):
+    def get(self):
+        self.write("GET on categories")
+
+class SubCategoriesHandler(BaseHandler):
+    def get(self):
+        self.write("GET on sub_categories")
+
+class WidgetCategoriesHandler(BaseHandler):
+    def post(self):
+        self.write("POST on widget categories")
+
+    def delete(self):
+        self.write("DELETE on widget categories")
+
+class OrderHandler(BaseHandler):
+    def get(self, id):
+        self.write("GET on order")
+
+    def post(self):
+        self.write("POST on order")
+
+    def put(self):
+        self.write("PUT on order")
+
+    def delete(self):
+        self.write("DELETE on order")
 
 
 def main():
