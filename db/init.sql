@@ -22,9 +22,11 @@ CREATE TABLE widget.widget (
 -- Properties
 CREATE TABLE widget.property (
   id SERIAL PRIMARY KEY,
-  type varchar NOT NULL,
+  category varchar NOT NULL,
   display_name varchar NOT NULL,
-  value varchar
+  value varchar,
+  parent integer REFERENCES widget.property (id),
+  depth smallint DEFAULT 0
 );
 
 -- WidgetProperty
