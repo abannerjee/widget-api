@@ -1,12 +1,12 @@
 import psycopg2
 import logging
 
-def connect(options):
+def connect(config):
     constr = "dbname='{}' user='{}' host='{}' port='{}'".format(
-        options['db'],
-        options['user'],
-        options['host'],
-        options['db_port']
+        config['db'],
+        config['user'],
+        config['host'],
+        config['db_port']
     )
-    logging.info('Connected to DB {}'.format(options['db']))
+    logging.info('Connected to DB {}'.format(config['db']))
     return psycopg2.connect(constr)
