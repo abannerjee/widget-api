@@ -10,6 +10,7 @@ import psycopg2
 import logging
 import sys
 import json
+import pgdb
 
 log = {
     'format': '%(asctime)s %(levelname)s: %(message)s',
@@ -27,16 +28,8 @@ options = {
 
 class Application(tornado.web.Application):
     def __init__(self):
-        # PostgreSQL DB Connection shared across all handlers
         try:
-            constr = "dbname='{}' user='{}' host='{}' port='{}'".format(
-                options['db'],
-                options['user'],
-                options['host'],
-                options['db_port']
-            )
-            conn = psycopg2.connect(constr)
-            self.db = conn
+            self.db = pgdb.connect(options)
         except:
             logging.error('Error: Unable to connect to the database')
             sys.exit(1)
