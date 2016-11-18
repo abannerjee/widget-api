@@ -9,12 +9,25 @@ import tornado.web
 import psycopg2
 import logging
 
+options = {
+    'app_port': 3000,
+    'db_port': 5432,
+    'host': '127.0.0.1',
+    'db': 'widgetdb',
+    'user': 'widgetapi'
+}
 
 class Application(tornado.web.Application):
     def __init__(self):
         # PostgreSQL DB Connection shared across all handlers
         try:
-            conn = psycopg2.connect("dbname='widgetdb' user='widgetapi' host='localhost'")
+            constr = "dbname='{}' user='{}' host='{}' port='{}'".format(
+                options['db'],
+                options['user'],
+                options['host'],
+                options['db_port']
+            )
+            conn = psycopg2.connect(constr)
             self.db = conn
         except:
             logging.error('Error: Unable to connect to the database')
@@ -38,7 +51,7 @@ class WidgetHandler(BaseHandler):
 
 def main():
     app = Application()
-    app.listen(3000)
+    app.listen(options['app_port'])
     IOLoop.current().start()
 
 if __name__ == "__main__":
