@@ -34,11 +34,11 @@ class Application(tornado.web.Application):
             sys.exit(1)
 
         routes = [
-            (r"/user/([0-9]+)|/user", user.Handler),
-            (r"/widget/([0-9]+)|/widget", widget.Handler),
-            (r"/widgets/?|(\?|\&)([^=]+)\=([^&]+)", widgets.Handler),
-            (r"/categories", category.Handler),
-            (r"/sub_categories/?|(\?|\&)([^=]+)\=([^&]+)", subcategory.Handler),
+            (r"/user/([0-9]+)|/user/?", user.Handler),
+            (r"/widget/([0-9]+)|/widget/?", widget.Handler),
+            (r"/widgets/?(.*)", widgets.Handler),
+            (r"/categories/?", category.Handler),
+            (r"/subcategories/?(.*)", subcategory.Handler),
             (r"/widget_categories", widgetcategory.Handler),
             (r"/order/([0-9]+)|/order", order.Handler)
         ]
