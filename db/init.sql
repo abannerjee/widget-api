@@ -12,12 +12,12 @@ GRANT USAGE ON SCHEMA test TO widgetapi;
 
 -- MAIN SCHEMA (widget)
 
--- Users
-CREATE TABLE widget.user (
-  u_id SERIAL PRIMARY KEY,
-  u_name varchar NOT NULL,
-  u_pw varchar NOT NULL
-);
+-- Inventory
+CREATE TABLE widget.inventory (
+  i_id SERIAL PRIMARY KEY,
+  i_widget_id integer REFERENCES widget.widget,
+  i_stock integer DEFAULT 0
+)
 
 -- Widgets
 CREATE TABLE widget.widget (
@@ -46,7 +46,6 @@ CREATE TABLE widget.widget_property (
 CREATE TABLE widget.order (
   o_id SERIAL PRIMARY KEY,
   o_created_on timestamp default current_timestamp,
-  o_user_id integer REFERENCES widget.user,
   o_widget_id integer REFERENCES widget.widget,
   o_quantity integer NOT NULL
 );
@@ -54,12 +53,12 @@ CREATE TABLE widget.order (
 
 -- TEST SCHEMA (test)
 
--- Users
-CREATE TABLE test.user (
-  u_id SERIAL PRIMARY KEY,
-  u_name varchar NOT NULL,
-  u_pw varchar NOT NULL
-);
+-- Inventory
+CREATE TABLE test.inventory (
+  i_id SERIAL PRIMARY KEY,
+  i_widget_id integer REFERENCES widget.widget,
+  i_stock integer DEFAULT 0
+)
 
 -- Widgets
 CREATE TABLE test.widget (
@@ -88,7 +87,6 @@ CREATE TABLE test.widget_property (
 CREATE TABLE test.order (
   o_id SERIAL PRIMARY KEY,
   o_created_on timestamp default current_timestamp,
-  o_user_id integer REFERENCES test.user,
   o_widget_id integer REFERENCES test.widget,
   o_quantity integer NOT NULL
 );
