@@ -7,11 +7,21 @@ Supports [ GET, POST, PUT ]
 from . import common as c
 
 class Handler(c.BaseHandler):
-    def get(self, id):
-        self.write("GET on widget: {}".format(id))
 
-    def post(self):
-        self.write("POST on widget")
+    """Returns a single widget with a matching ID"""
+    def get(self, id):
+        if id is not None:
+            query = "SELECT * FROM {}.widget WHERE w_id = {}".format(self.schema, id)
+            cur = self.db.cursor()
+            cur.execute(query)
+            self.write(c.formatdata(cur))
+        else:
+            self.set_status(400)
+            self.write('ERROR: ID must be specified in order to GET widget.')
+
+    def post(self, arg):
+        #print(self.get_arguments('data'))
+        self.write("TODO")
 
     def put(self):
-        self.write("PUT on widget")
+        self.write("TODO")
