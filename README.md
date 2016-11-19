@@ -33,7 +33,7 @@ Start the server:
 python server.py
 ```
 
-### Testing
+## Testing
 API endpoints can be tested by running the following command:
 (Note, the postgresql DB must be running locally to execute tests)
 
