@@ -33,7 +33,17 @@ Start the server:
 python server.py
 ```
 
+### Testing
+API endpoints can be tested by running the following command:
+(Note, the postgresql DB must be running locally to execute tests)
 
+```sh
+python -m unittest test/{endpoint}.py
+
+e.g.
+python -m unittest test/category.py
+python -m unittest test/*.py
+```
 ## Endpoints
 
 | VERB | URL | DESCRIPTION |
