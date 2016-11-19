@@ -18,15 +18,17 @@ config = {
     'host': '127.0.0.1',
     'db': 'widgetdb',
     'user': 'widgetapi',
+    'schema': 'widget',
     'logformat': '%(asctime)s %(levelname)s: %(message)s',
     'logfile': 'server.log',
     'loglevel': logging.DEBUG
 }
 
 class Application(tornado.web.Application):
-    def __init__(self):
+    def __init__(self, cfg=config):
         try:
-            self.db = pgdb.connect(config)
+            self.db = pgdb.connect(cfg)
+            self.schema = cfg['schema']
         except:
             logging.error('Unable to connect to the database')
             sys.exit(1)
@@ -49,7 +51,7 @@ def setupLogging():
         filename=config['logfile'],
         level=config['loglevel']
     )
-    logging.info('Server started on {}:{}'.format(config['host'], config['app_port']))
+    logging.info('Starting server on {}:{}'.format(config['host'], config['app_port']))
 
 def main():
     setupLogging()

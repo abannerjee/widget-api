@@ -7,6 +7,10 @@ import json
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
+    def schema(self):
+        return self.application.schema
+
+    @property
     def db(self):
         return self.application.db
 
