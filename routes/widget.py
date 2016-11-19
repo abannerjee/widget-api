@@ -19,7 +19,7 @@ class Handler(c.BaseHandler):
             self.set_status(400)
             self.write('ERROR: ID must be specified in order to GET widget.')
 
-    def post(self, arg):
+    def post(self, *arg):
         #print(self.get_arguments('data'))
         self.write("TODO")
 
