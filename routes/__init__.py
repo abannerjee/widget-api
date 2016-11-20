@@ -3,7 +3,6 @@ __all__ = [
   'common',
   'order',
   'subcategory',
-  'user',
   'widget',
   'widgetcategory',
   'widgets'
