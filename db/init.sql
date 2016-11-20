@@ -30,7 +30,7 @@ CREATE TABLE widget.inventory (
 -- Properties
 CREATE TABLE widget.property (
   p_id SERIAL PRIMARY KEY,
-  p_type varchar NOT NULL,
+  p_category varchar NOT NULL,
   p_name varchar NOT NULL,
   p_value varchar
 );
@@ -72,7 +72,7 @@ CREATE TABLE test.inventory (
 -- Properties
 CREATE TABLE test.property (
   p_id SERIAL PRIMARY KEY,
-  p_type varchar NOT NULL,
+  p_category varchar NOT NULL,
   p_name varchar NOT NULL,
   p_value varchar
 );
