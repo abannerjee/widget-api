@@ -61,7 +61,8 @@ class Handler(c.BaseHandler):
 
             widgets.append(widget)
 
-        # If query parameters are not provided, return all widgets
+        """If query parameters are not provided or invalid,
+        return all widgets without filtering."""
         if len(valid_params) == 0:
             ret = widgets
         else:
