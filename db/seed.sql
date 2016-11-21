@@ -4,10 +4,11 @@ INSERT INTO widget.widget (w_name) VALUES
   ('super saver'),
   ('super deluxe'),
   ('ultra saver'),
-  ('supreme deluxe');
+  ('supreme deluxe'),
+  ('improved super save');
 
 INSERT INTO widget.widget (w_name, w_inherit) VALUES
-  ('improved super save', '{1,5}');
+  ('improved super save', '{5,1}');
 
 INSERT INTO widget.property (p_category, p_name, p_value) VALUES
   ('type', 'prime', NULL),

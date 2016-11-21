@@ -12,13 +12,14 @@ import json
 class Handler(c.BaseHandler):
 
     """Returns all 'widgets' matching query parameters if provided
-    otherwise just returns all widgets.
-    If duplicate parameters are defined, only the first one is considered."""
+    otherwise just returns all widgets."""
     def get(self, *args):
         url = self.request.uri
         qs = urllib.urlsplit(url)
         parsed = urllib.parse_qs(qs.query)
 
+        """Placeholder for supporting inheritance.
+        Inheritance is currently not implemented."""
         query = """
             WITH all_inherited_widgets AS (
                 SELECT w_id, w_name, unnest(w_inherit) FROM {%1}.widget
@@ -36,6 +37,8 @@ class Handler(c.BaseHandler):
         data = c.parsedata(cur)
         categories = py_.pluck(data, 'p_category')
         valid_params = py_.intersection(parsed.keys(), categories)
+
+        """Create a hash with widget id as key."""
         data_by_id = py_.group_by(data, 'w_id')
 
         """For each widget, create a new widget object to return."""
@@ -43,21 +46,24 @@ class Handler(c.BaseHandler):
         for wid in data_by_id.keys():
             this = data_by_id[wid]
             by_cat = py_.group_by(this, 'p_category')
-            p_cats = py_.pluck(this, 'p_category')
-            p_names = py_.pluck(this, 'p_name')
+            uniq_cat = py_.uniq(py_.pluck(this, 'p_category'))
 
             widget = {
                 'w_id': wid,
                 'w_name': py_.uniq(py_.pluck(this, 'w_name'))[0],
-                'properties': dict(zip(p_cats, p_names)),
                 'match': False
             }
+
+            """Create a new key, val pair for each property
+            for the widget."""
+            for cat in uniq_cat:
+                widget[cat] = py_.pluck(by_cat[cat], 'p_name')
 
             """Check if each property associated with the
             widget matches the query parameters."""
             for key in valid_params:
                 if key in by_cat.keys():
-                    widget['match'] = py_.contains(py_.pluck(by_cat[key], 'p_name'), parsed[key][0])
+                    widget['match'] = len(py_.intersection(widget[key], parsed[key])) > 0
 
             widgets.append(widget)
 
