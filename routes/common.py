@@ -6,6 +6,9 @@ import tornado.web
 import json
 
 class BaseHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+
     @property
     def schema(self):
         return self.application.schema
