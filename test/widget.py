@@ -17,7 +17,7 @@ class TestWidgetHandler(AsyncHTTPTestCase):
         res = json.loads(response.body.decode('utf-8'))
         self.assertEqual(response.code, 200)
         self.assertEqual(len(res), 1)
-        self.assertEqual(res[0]['w_name'], 'test-widget')
+        self.assertEqual(res[0]['w_name'], 'test-widget-1')
 
     def test_widget_get_noid(self):
         response = self.fetch('/widget')
