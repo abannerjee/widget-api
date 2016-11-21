@@ -9,8 +9,9 @@ import urllib.parse as urllib
 
 class Handler(c.BaseHandler):
 
-    """Returns all 'properties' matching a parent id if provided
-    otherwise just returns all 'properties' where parent id is not null"""
+    """Returns all 'properties' matching a widget id if provided
+    otherwise just returns all 'properties'.
+    A subcategory is considered to be a property whose category != 'type' """
     def get(self, *args):
         url = self.request.uri
         qs = urllib.urlsplit(url)
