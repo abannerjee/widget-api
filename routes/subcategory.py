@@ -16,10 +16,20 @@ class Handler(c.BaseHandler):
         qs = urllib.urlsplit(url)
         parsed = urllib.parse_qs(qs.query)
 
-        if 'parent' in parsed:
-            query = "SELECT * FROM {}.property WHERE p_parent = {}".format(self.schema, parsed['parent'][0])
+        if 'widget' in parsed:
+            query = """
+                WITH all_inherited_widgets AS (
+                    SELECT unnest(w_inherit) FROM {%1}.widget WHERE w_id = {%2}
+                )
+                SELECT p_id, p_category, p_name, p_value FROM {%1}.widget_property wp
+                JOIN {%1}.widget w ON (wp.wp_widget_id = w.w_id)
+                JOIN {%1}.property p ON (wp.wp_property_id = p.p_id)
+                WHERE w.w_id = ANY (SELECT * FROM all_inherited_widgets)
+                AND p.p_category != 'type';
+            """
+            query = query.replace('{%1}', self.schema).replace('{%2}', parsed['widget'][0])
         else:
-            query = "SELECT * FROM {}.property WHERE p_parent IS NOT NULL".format(self.schema)
+            query = "SELECT * FROM {}.property WHERE p_category != 'type'".format(self.schema)
 
         cur = self.db.cursor()
         cur.execute(query)

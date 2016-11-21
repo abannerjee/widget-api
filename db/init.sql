@@ -16,8 +16,7 @@ GRANT USAGE ON SCHEMA test TO widgetapi;
 CREATE TABLE widget.widget (
   w_id SERIAL PRIMARY KEY,
   w_name varchar NOT NULL,
-  w_parent integer REFERENCES widget.widget,
-  w_depth smallint DEFAULT 0
+  w_inherit integer[] DEFAULT ARRAY[currval('widget.widget_w_id_seq')]
 );
 
 -- Inventory
@@ -46,7 +45,7 @@ CREATE TABLE widget.widget_property (
 -- Orders
 CREATE TABLE widget.order (
   o_id SERIAL PRIMARY KEY,
-  o_created_on timestamp default current_timestamp,
+  o_created_on timestamp DEFAULT current_timestamp,
   o_widget_id integer REFERENCES widget.widget,
   o_configuration integer[]
 );
@@ -58,8 +57,7 @@ CREATE TABLE widget.order (
 CREATE TABLE test.widget (
   w_id SERIAL PRIMARY KEY,
   w_name varchar NOT NULL,
-  w_parent integer REFERENCES test.widget,
-  w_depth smallint DEFAULT 0
+  w_inherit integer[] DEFAULT ARRAY[currval('test.widget_w_id_seq')]
 );
 
 -- Inventory
@@ -87,7 +85,7 @@ CREATE TABLE test.widget_property (
 -- Orders
 CREATE TABLE test.order (
   o_id SERIAL PRIMARY KEY,
-  o_created_on timestamp default current_timestamp,
+  o_created_on timestamp DEFAULT current_timestamp,
   o_widget_id integer REFERENCES test.widget,
   o_configuration integer[]
 );
