@@ -4,11 +4,13 @@ INSERT INTO widget.widget (w_name) VALUES
   ('super saver'),
   ('super deluxe'),
   ('ultra saver'),
-  ('supreme deluxe'),
-  ('improved super save');
+  ('supreme deluxe');
 
 INSERT INTO widget.widget (w_name, w_inherit) VALUES
   ('improved super save', '{5,1}');
+
+INSERT INTO widget.inventory (i_widget_id, i_stock) VALUES
+  (1, 100), (2, 75), (3, 50), (4, 20), (5, 10);
 
 INSERT INTO widget.property (p_category, p_name, p_value) VALUES
   ('type', 'prime', NULL),
@@ -37,6 +39,9 @@ INSERT INTO test.widget (w_name) VALUES
 
 INSERT INTO test.widget (w_name, w_inherit) VALUES
   ('test-widget-2', '{2,1}');
+
+INSERT INTO test.inventory (i_widget_id, i_stock) VALUES
+  (1, 10), (2, 20);
 
 INSERT INTO test.property (p_category, p_name, p_value) VALUES
   ('type', 'test-type-1', '1'),
