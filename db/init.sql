@@ -30,7 +30,7 @@ CREATE TABLE widget.inventory (
 CREATE TABLE widget.property (
   p_id SERIAL PRIMARY KEY,
   p_category varchar NOT NULL,
-  p_name varchar NOT NULL,
+  p_name varchar UNIQUE NOT NULL,
   p_value varchar
 );
 

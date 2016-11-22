@@ -51,7 +51,7 @@ class Handler(c.BaseHandler):
             widget = {
                 'w_id': wid,
                 'w_name': py_.uniq(py_.pluck(this, 'w_name'))[0],
-                'match': False
+                'match': True
             }
 
             """Create a new key, val pair for each property
@@ -63,7 +63,7 @@ class Handler(c.BaseHandler):
             widget matches the query parameters."""
             for key in valid_params:
                 if key in by_cat.keys():
-                    widget['match'] = len(py_.intersection(widget[key], parsed[key])) > 0
+                    widget['match'] = widget['match'] and len(py_.intersection(widget[key], parsed[key])) > 0
 
             widgets.append(widget)
 
