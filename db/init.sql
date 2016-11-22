@@ -41,13 +41,19 @@ CREATE TABLE widget.widget_property (
   wp_property_id integer REFERENCES widget.property
 );
 
+-- User Orders
+CREATE TABLE widget.user_order (
+  u_id SERIAL PRIMARY KEY,
+  u_created_on timestamp DEFAULT current_timestamp
+);
 
 -- Orders
 CREATE TABLE widget.order (
   o_id SERIAL PRIMARY KEY,
   o_created_on timestamp DEFAULT current_timestamp,
   o_widget_id integer REFERENCES widget.widget,
-  o_configuration integer[]
+  o_configuration integer[],
+  o_user_order_id integer REFERENCES widget.user_order
 );
 
 
@@ -82,10 +88,17 @@ CREATE TABLE test.widget_property (
   wp_property_id integer REFERENCES test.property
 );
 
+-- User Orders
+CREATE TABLE test.user_order (
+  u_id SERIAL PRIMARY KEY,
+  u_created_on timestamp DEFAULT current_timestamp
+);
+
 -- Orders
 CREATE TABLE test.order (
   o_id SERIAL PRIMARY KEY,
   o_created_on timestamp DEFAULT current_timestamp,
   o_widget_id integer REFERENCES test.widget,
-  o_configuration integer[]
+  o_configuration integer[],
+  o_user_order_id integer REFERENCES test.user_order
 );
