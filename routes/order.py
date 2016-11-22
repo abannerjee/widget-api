@@ -21,7 +21,7 @@ class Handler(c.BaseHandler):
     }
     """
     def post(self, *args):
-        data = json.loads(self.get_arguments('data')[0])
+        data = json.loads(self.get_arguments('data')[0].replace("'", '"'))
 
         # Create a new user order record
         query = """

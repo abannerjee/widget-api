@@ -21,7 +21,7 @@ class Handler(c.BaseHandler):
 
     def post(self, *arg):
         #print(self.get_arguments('data'))
-        self.write("TODO")
+        self.write("POST on Widget")
 
     def put(self):
-        self.write("TODO")
+        self.write("PUT on Widget")

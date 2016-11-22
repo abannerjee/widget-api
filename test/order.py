@@ -5,6 +5,7 @@ from test.config import config
 import server
 import unittest
 import json
+import urllib.parse
 
 class TestOrderHandler(AsyncHTTPTestCase):
 
@@ -12,7 +13,12 @@ class TestOrderHandler(AsyncHTTPTestCase):
         return server.Application(config)
 
     def test_order_post(self):
-        data = { 'data': [{'w_id': 1, 'p_id': [1,5] }] }
+        data = {
+          'data': [{
+            'w_id': '1',
+            'p_ids': ['1','5']
+          }]
+        }
         body = urllib.parse.urlencode(data)
         response = self.fetch('/order', method="POST", headers=None, body=body)
         res = json.loads(response.body.decode('utf-8'))
