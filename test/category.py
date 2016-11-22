@@ -14,7 +14,6 @@ class TestCategoryHandler(AsyncHTTPTestCase):
     def test_get(self):
         response = self.fetch('/categories')
         res = json.loads(response.body.decode('utf-8'))
-        print(res)
         self.assertEqual(response.code, 200)
         self.assertEqual(len(res), 2)
 

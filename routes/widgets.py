@@ -21,13 +21,9 @@ class Handler(c.BaseHandler):
         """Placeholder for supporting inheritance.
         Inheritance is currently not implemented."""
         query = """
-            WITH all_inherited_widgets AS (
-                SELECT w_id, w_name, unnest(w_inherit) FROM {%1}.widget
-            )
             SELECT w_id, w_name, p_id, p_category, p_name, p_value FROM {%1}.widget_property wp
             JOIN {%1}.widget w ON (wp.wp_widget_id = w.w_id)
-            JOIN {%1}.property p ON (wp.wp_property_id = p.p_id)
-            WHERE w.w_id = ANY (SELECT unnest FROM all_inherited_widgets);
+            JOIN {%1}.property p ON (wp.wp_property_id = p.p_id);
         """
         query = query.replace('{%1}', self.schema)
         cur = self.db.cursor()

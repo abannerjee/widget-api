@@ -1,6 +1,6 @@
 """ Order Handler
 
-Supports [ GET, POST, PUT, DELETE ]
+Supports [ GET, POST ]
 
 """
 
@@ -49,6 +49,7 @@ class Handler(c.BaseHandler):
         cur.execute(query)
         u_id = cur.fetchone()[0]
 
+        # Create order records, linking each to user order
         for order in data:
             q2 = """
                 INSERT INTO {%1}.order (o_widget_id, o_user_order_id, o_configuration)
@@ -61,9 +62,3 @@ class Handler(c.BaseHandler):
 
         self.db.commit()
         self.write(str(u_id))
-
-    def put(self):
-        self.write("PUT on order")
-
-    def delete(self):
-        self.write("DELETE on order")

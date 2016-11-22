@@ -19,7 +19,7 @@ class TestInventoryHandler(AsyncHTTPTestCase):
         self.assertEqual(len(res), 1)
 
     def test_inventory_post(self):
-        data = { 'w_id': '1', 'stock': '11' }
+        data = { 'w_id': '2', 'stock': '11' }
         body = urllib.parse.urlencode(data)
         response = self.fetch('/inventory', method="POST", headers=None, body=body)
         res = response.body.decode('utf-8')

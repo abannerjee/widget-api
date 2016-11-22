@@ -23,22 +23,12 @@ class TestWidgetHandler(AsyncHTTPTestCase):
         response = self.fetch('/widget')
         self.assertEqual(response.code, 400)
 
-    """
     def test_widget_post(self):
-        data = {'data': {'type': 'test-type'}}
+        data = {'data': {'name': 'test-new-widget', 'type': '1', 'props': ['5', '6']}}
         body = urllib.parse.urlencode(data)
         response = self.fetch('/widget', method="POST", headers=None, body=body)
         res = json.loads(response.body.decode('utf-8'))
         self.assertEqual(response.code, 200)
-
-    def test_widget_put(self):
-        data = {'data': {'type': 'test-type'}}
-        body = urllib.parse.urlencode(data)
-        response = self.fetch('/widget', method="POST", headers=None, body=body)
-        res = json.loads(response.body.decode('utf-8'))
-        self.assertEqual(response.code, 200)
-    """
-
 
 if __name__ == '__main__':
     unittest.main()

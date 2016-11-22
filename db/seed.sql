@@ -52,9 +52,6 @@ INSERT INTO test.property (p_category, p_name, p_value) VALUES
   ('size', 'test-size-1', '1'),
   ('size', 'test-size-2', '2');
 
-INSERT INTO test.inventory (i_widget_id, i_stock) VALUES
-  (1, 100), (2, 50);
-
 INSERT INTO test.widget_property (wp_widget_id, wp_property_id) VALUES
   (1, 1), (1, 3), (1, 4), (1, 6),
   (2, 2), (2, 5), (2, 7);
