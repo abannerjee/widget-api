@@ -38,8 +38,9 @@ class Application(tornado.web.Application):
             (r"/widgets/?(.*)", widgets.Handler),
             (r"/categories/?", category.Handler),
             (r"/subcategories/?(.*)", subcategory.Handler),
-            (r"/widget_categories", widgetcategory.Handler),
-            (r"/order/([0-9]+)|/order", order.Handler)
+            (r"/widget_categories/?", widgetcategory.Handler),
+            (r"/order/([0-9]+)|/order/?", order.Handler),
+            (r"/inventory/([0-9]+)|/inventory/?", inventory.Handler),
         ]
 
         super(Application, self).__init__(routes)

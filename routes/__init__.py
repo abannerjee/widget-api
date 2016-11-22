@@ -5,5 +5,6 @@ __all__ = [
   'subcategory',
   'widget',
   'widgetcategory',
-  'widgets'
+  'widgets',
+  'inventory'
 ]
