@@ -48,17 +48,20 @@ python -m unittest test/*.py
 
 | VERB | URL | DESCRIPTION |
 | --- | --- | --- |
-| GET | /user/:id | Returns a user specified by ID |
-| POST | /user | Creates a new user |
 | GET | /widget/:id | Returns a widget specified by ID |
 | POST | /widget | Creates a new widget |
-| PUT | /widget/:id | Updates a widget specifed by ID |
-| GET | /widgets | Returns all widgets |
-| GET | /categories | Returns all categories |
+| | | { data: { name: STR, type: ID, props: [ID] } } |
+| GET | /widgets?PARAMS | Returns all widgets matching query parameters |
+| | | PARAMS are expected to match 'p_category=p_name' |
+| | | Refer to 'Property' table for p_category, p_name |
+| GET | /categories?widget=ID | Returns all categories |
+| | | Optional param 'widget' to get all categories for a widget |
 | GET | /sub_categories | Returns all sub categories |
-| POST | /widget_categories | Creates a new category |
-| DELETE | /widget_categories | Deletes widget categories |
+| POST | /widget_categories | NOT Implemented |
+| DELETE | /widget_categories | NOT Implemented |
 | GET | /order/:id | Returns an order specified by ID |
 | POST | /order | Creates a new order |
-| PUT | /order/:id | Updates an order |
-| DELETE | /order/:id | Deletes an order |
+| | | { data: [{ w_id: ID, p_ids: [ID] }] } |
+| GET | /inventory/:id | Returns inventory for all widgets or specified widget by ID |
+| POST | /inventory | Updates widget stock on an existing inventory record |
+| | | { w_id: ID, stock: INT } |
