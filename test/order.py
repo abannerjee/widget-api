@@ -12,6 +12,11 @@ class TestOrderHandler(AsyncHTTPTestCase):
     def get_app(self):
         return server.Application(config)
 
+    def test_widget_get(self):
+        response = self.fetch('/widget/1')
+        res = json.loads(response.body.decode('utf-8'))
+        self.assertEqual(response.code, 200)
+
     def test_order_post(self):
         data = {
           'data': [{

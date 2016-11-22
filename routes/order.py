@@ -8,8 +8,23 @@ from . import common as c
 import json
 
 class Handler(c.BaseHandler):
+
+    """Returns all orders given user_order ID.
+    If ID is not provided, returns an error."""
     def get(self, id):
-        self.write("GET on order")
+        if id is not None:
+            query = """
+                SELECT TO_CHAR(o_created_on, 'MM/DD/YYYY'),
+                o_id, o_widget_id, o_configuration, o_user_order_id
+                FROM {}.order WHERE o_user_order_id = {}
+            """
+            query = query.format(self.schema, id)
+            cur = self.db.cursor()
+            cur.execute(query)
+            self.write(c.formatdata(cur))
+        else:
+            self.set_status(400)
+            self.write('ERROR: ID must be specified in order to GET order.')
 
     """Create a new order. Orders expect data to be
     in the following format:

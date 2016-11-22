@@ -28,8 +28,6 @@ class Handler(c.BaseHandler):
     }
     """
     def post(self, *args):
-        print(self.get_arguments('w_id'))
-        print(self.get_arguments('stock'))
         w_id = json.loads(self.get_arguments('w_id')[0])
         stock = json.loads(self.get_arguments('stock')[0])
 
